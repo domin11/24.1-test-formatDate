@@ -1,11 +1,31 @@
 const formatDate = (timeInSeconds) => {
-  var hours = Math.floor(time / 3600);
-  var minutes = Math.floor(time / 60) - (hours * 60);
-  var sec = (time % 60).toFixed(0);
-  if (time < 3600) {
-    return minutes + 'min ' + sec + 'sec';
-  } else
-  return hours + 'h ' + minutes + 'min ' + sec + ' sec';
+  const seconds = timeInSeconds%60;
+  const minutes =  Math.floor(timeInSeconds/60);
+  const hours = Math.floor(minutes/60);
+  const minute = minutes%60;
+
+  if (timeInSeconds == null) {
+      return `0s`;
+  } else if (timeInSeconds < 60 ) {
+      return `${timeInSeconds}s`;
+  } else if (timeInSeconds < 3600) {
+      if (seconds === 0) {
+          return `${minutes}m`;
+      }
+      return `${minutes}m ${seconds}s`
+  }
+
+  if (minutes >= 60) {
+    if (minute === 0 && seconds === 0) {
+        return `${hours}h`
+    } else if(seconds === 0) {
+        return `${hours}h ${minute}m`
+    } else if(minute === 0) {
+        return `${hours}h ${seconds}s`;
+    } else {
+    return `${hours}h ${minute}m ${seconds}s`;
+    }
+  }
 }
 
 module.exports = formatDate;
